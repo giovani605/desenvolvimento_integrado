@@ -3,7 +3,7 @@ package entidade;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity(name = "PedidoDetalhe")
+//@Entity(name = "PedidoDetalhe")
 public class PedidoDetalhe {
 
 	public PedidoDetalhe() {

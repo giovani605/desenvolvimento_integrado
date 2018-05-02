@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity(name = "Pedido")
+//@Entity(name = "Pedido")
 public class Pedido {
 
 	public Pedido() {
