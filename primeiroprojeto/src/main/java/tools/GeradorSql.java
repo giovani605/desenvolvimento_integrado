@@ -21,27 +21,27 @@ public class GeradorSql {
 		try {
 			PrintWriter printWriter = new PrintWriter(f);
 			printWriter.write("\n");
-
+			Random rand = new Random();
 			for (int a = 1; a < numProdutos; a++) {
-				Random rand = new Random();
+
 				byte[] by = new byte[10];
 				rand.nextBytes(by);
 				printWriter.println(criarProduto(getProdutoAletorio(), rand.nextInt(1000)));
 			}
 			for (int a = 1; a < numClientes; a++) {
-				Random rand = new Random();
+
 				byte[] by = new byte[10];
 				rand.nextBytes(by);
 				printWriter.println(criarCliente(getNomeAletorio()));
-			}
-			/* 
-			for (int b = 1; b < numPedidos; b++) {
-				Random rand = new Random();
-				printWriter.println(criarPedido(a));
-				for (int c = 1; c < numProdutos; c++)
-					printWriter.println(criarPedidoDetalhe(b, c, 1, rand.nextInt(20000)));
+				for (int b = 1; b < numPedidos; b++) {
 
-			}*/
+					printWriter.println(criarPedido(a));
+					// for (int c = 1; c < numProdutos; c++)
+					// printWriter.println(criarPedidoDetalhe(b, c, 1, rand.nextInt(20000)));
+
+				}
+			}
+
 			printWriter.flush();
 			printWriter.close();
 
