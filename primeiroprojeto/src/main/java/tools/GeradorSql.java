@@ -21,28 +21,27 @@ public class GeradorSql {
 		try {
 			PrintWriter printWriter = new PrintWriter(f);
 			printWriter.write("\n");
-			
-			for (int a = 0; a < numProdutos ; a++) {
+
+			for (int a = 1; a < numProdutos; a++) {
 				Random rand = new Random();
 				byte[] by = new byte[10];
 				rand.nextBytes(by);
 				printWriter.println(criarProduto(getProdutoAletorio(), rand.nextInt(1000)));
 			}
-			for (int a = 0; a < numClientes; a++) {
+			for (int a = 1; a < numClientes; a++) {
 				Random rand = new Random();
 				byte[] by = new byte[10];
 				rand.nextBytes(by);
 				printWriter.println(criarCliente(getNomeAletorio()));
-				for (int b = 1; b < numPedidos ; b++) {
-					printWriter.println(criarPedido(a));
-					printWriter.println(criarPedidoDetalhe(a,rand.nextInt(numProdutos+1),1,rand.nextInt(20000)));
-					
-				}
 			}
-			
-			
-			
-			
+			/* 
+			for (int b = 1; b < numPedidos; b++) {
+				Random rand = new Random();
+				printWriter.println(criarPedido(a));
+				for (int c = 1; c < numProdutos; c++)
+					printWriter.println(criarPedidoDetalhe(b, c, 1, rand.nextInt(20000)));
+
+			}*/
 			printWriter.flush();
 			printWriter.close();
 
@@ -52,18 +51,20 @@ public class GeradorSql {
 		}
 
 	}
-	public static String criarPedidoDetalhe(int idPedido,int idProduto,int qtd,int preco) {
-		String a = "INSERT  INTO pedidodetalhe  (NroPedido,ProdutoID,Quantidade,preco)"
-				+ " VALUES  ("+idPedido+","+idProduto+","+qtd+","+preco+")"; 
+
+	public static String criarPedidoDetalhe(int idPedido, int idProduto, int qtd, int preco) {
+		if (idProduto == 0)
+			idProduto = 1;
+		String a = "INSERT  INTO pedidodetalhe  (NroPedido,ProdutoID,Quantidade,preco)" + " VALUES  (" + idPedido + ","
+				+ idProduto + "," + qtd + "," + preco + ") ; ";
 		return a;
 	}
-	
-	
+
 	public static String criarPedido(int idCliente) {
-		Date data =  new Date();
+		Date data = new Date();
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-		String a = "INSERT INTO pedido  (clienteid ,data_pedido) "
-				+ "VALUES ("+idCliente+", '"+dt.format(data)+"'); \n"; 
+		String a = "INSERT INTO pedido  (clienteid ,data_pedido) " + "VALUES (" + idCliente + ", '" + dt.format(data)
+				+ "'); \n";
 		return a;
 	}
 
@@ -85,7 +86,7 @@ public class GeradorSql {
 		String a = "INSERT INTO cliente (nome) VALUES ('" + nome + "'); \n";
 		return a;
 	}
-	
+
 	public static String getProdutoAletorio() {
 		ArrayList<String> lista = new ArrayList<>();
 		lista.add("Notebook");
@@ -97,12 +98,9 @@ public class GeradorSql {
 		return lista.get(rand.nextInt(lista.size()));
 	}
 
-	public static String criarProduto(String nome,int valor) {
-		String a = "INSERT INTO Produto (descricao,preco) VALUES ('"+nome+"',"+valor+"); \n";
+	public static String criarProduto(String nome, int valor) {
+		String a = "INSERT INTO Produto (descricao,preco) VALUES ('" + nome + "'," + valor + "); \n";
 		return a;
 	}
-	
-	
-	
 
 }
