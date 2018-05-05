@@ -14,6 +14,7 @@ public class GeradorSql {
 	public static int numClientes = 10;
 	public static int numProdutos = 10;
 	public static int numPedidos = 5;
+	public static int numeroDias = 5;
 
 	public static void main(String[] args) {
 
@@ -28,19 +29,25 @@ public class GeradorSql {
 				rand.nextBytes(by);
 				printWriter.println(criarProduto(getProdutoAletorio(), rand.nextInt(1000)));
 			}
+			int cont = 0;
 			for (int a = 1; a < numClientes; a++) {
 
 				byte[] by = new byte[10];
 				rand.nextBytes(by);
 				printWriter.println(criarCliente(getNomeAletorio()));
-				for (int b = 1; b < numPedidos; b++) {
-
-					printWriter.println(criarPedido(a));
-					// for (int c = 1; c < numProdutos; c++)
-					// printWriter.println(criarPedidoDetalhe(b, c, 1, rand.nextInt(20000)));
-
+				Date date = new Date();
+				for (int dias = 0; dias < numeroDias; dias++) {
+					for (int b = 1; b < numPedidos; b++) {
+						printWriter.println(criarPedido(a, date));
+						cont++;
+					}
+					date.setDate(date.getDate() - 1);
 				}
 			}
+
+			for (int c = 1; c < cont; c++)
+				for (int d = 1; d < 10; d++)
+					printWriter.println(criarPedidoDetalhe(c, d, 1, rand.nextInt(20000)));
 
 			printWriter.flush();
 			printWriter.close();
@@ -60,10 +67,9 @@ public class GeradorSql {
 		return a;
 	}
 
-	public static String criarPedido(int idCliente) {
-		Date data = new Date();
+	public static String criarPedido(int idCliente, Date date) {
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-		String a = "INSERT INTO pedido  (clienteid ,data_pedido) " + "VALUES (" + idCliente + ", '" + dt.format(data)
+		String a = "INSERT INTO pedido  (clienteid ,data_pedido) " + "VALUES (" + idCliente + ", '" + dt.format(date)
 				+ "'); \n";
 		return a;
 	}
